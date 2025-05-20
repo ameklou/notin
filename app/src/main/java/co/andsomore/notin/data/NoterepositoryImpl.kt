@@ -10,12 +10,31 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NoteRepositoryImpl @Inject constructor(
+class NoteRepositoryImpl (
     private val firestore: FirebaseFirestore
 ) : NoteRepository {
     private val notesCollection = firestore.collection("notes")
 
-    override suspend fun getNotes(): Flow<List<Note>> = callbackFlow {
+//    override suspend fun getNotes(): Flow<List<Note>> = callbackFlow {
+//        val snapshotListener = notesCollection
+//            .orderBy("createdAt", Query.Direction.DESCENDING)
+//            .addSnapshotListener { snapshot, error ->
+//                if (error != null) {
+//                    close(error)
+//                    return@addSnapshotListener
+//                }
+//
+//                if (snapshot != null) {
+//                    val notes = snapshot.toObjects(Note::class.java)
+//                        .map { note -> note.copy(id = snapshot.documents.find { it.toObject(Note::class.java) == note }?.id ?: "") }
+//                    trySend(notes)
+//                }
+//            }
+//
+//        awaitClose { snapshotListener.remove() }
+//    }
+
+    override fun getNotes(): Flow<List<Note>> = callbackFlow {
         val snapshotListener = notesCollection
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->

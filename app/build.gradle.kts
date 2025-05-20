@@ -2,9 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
-    id("com.google.devtools.ksp")
+//    id("io.insert-koin.android")
 }
 
 android {
@@ -61,6 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
@@ -70,16 +70,20 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
 
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.50")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+//    implementation(libs.hilt.android)
+//    ksp(libs.hilt.android.compiler)
+//    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation("io.insert-koin:koin-android:4.0.3")
+    implementation("io.insert-koin:koin-androidx-compose:4.0.3")
+    implementation("io.insert-koin:koin-androidx-workmanager:3.5.3")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1")
 }
 
-// Allow references to generated code
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
-}
+//// Allow references to generated code
+//ksp {
+//    arg("room.schemaLocation", "$projectDir/schemas")
+//}

@@ -2,25 +2,14 @@ package co.andsomore.notin.di
 
 import co.andsomore.notin.data.NoteRepository
 import co.andsomore.notin.data.NoteRepositoryImpl
+import co.andsomore.notin.viewmodel.NoteViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.core.module.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-    @Provides
-    @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
 
-    @Provides
-    @Singleton
-    fun provideNoteRepository(firestore: FirebaseFirestore): NoteRepository {
-        return NoteRepositoryImpl(firestore)
-    }
+val appModule = module {
+    single { FirebaseFirestore.getInstance() }
+    single<NoteRepository> { NoteRepositoryImpl(get()) }
+    viewModel { NoteViewModel(get()) }
 }

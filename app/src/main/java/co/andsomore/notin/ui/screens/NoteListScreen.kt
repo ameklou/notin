@@ -29,12 +29,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.andsomore.notin.data.Note
 import co.andsomore.notin.viewmodel.NoteViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesListScreen(
     onNoteClick: (String) -> Unit,
-    viewModel: NoteViewModel
+    viewModel: NoteViewModel = koinViewModel()
 ) {
     val notes by viewModel.notes.collectAsState()
 

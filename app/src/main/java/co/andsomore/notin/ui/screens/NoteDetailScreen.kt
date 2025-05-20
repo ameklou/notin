@@ -30,12 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.andsomore.notin.data.Note
 import co.andsomore.notin.viewmodel.NoteViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteDetailScreen(
     noteId: String,
-    viewModel: NoteViewModel,
+    viewModel: NoteViewModel = koinViewModel(),
     onBackClick: () -> Unit
 ) {
     var note by remember { mutableStateOf<Note?>(null) }

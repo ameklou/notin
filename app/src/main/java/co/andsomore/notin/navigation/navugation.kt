@@ -4,6 +4,10 @@ import androidx.compose.runtime.Composable
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import co.andsomore.notin.ui.screens.NoteDetailScreen
+import co.andsomore.notin.ui.screens.NotesListScreen
 import co.andsomore.notin.viewmodel.NoteViewModel
 
 sealed class Screen(val route: String) {
@@ -14,7 +18,8 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun NotesNavHost(navController: NavHostController, viewModel: NoteViewModel) {
+fun NotesNavHost() {
+    val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = Screen.NotesList.route
@@ -23,15 +28,13 @@ fun NotesNavHost(navController: NavHostController, viewModel: NoteViewModel) {
             NotesListScreen(
                 onNoteClick = { noteId ->
                     navController.navigate(Screen.NoteDetail.createRoute(noteId))
-                },
-                viewModel = viewModel
+                }
             )
         }
         composable(Screen.NoteDetail.route) { backStackEntry ->
             val noteId = backStackEntry.arguments?.getString("noteId") ?: ""
             NoteDetailScreen(
                 noteId = noteId,
-                viewModel = viewModel,
                 onBackClick = { navController.popBackStack() }
             )
         }
